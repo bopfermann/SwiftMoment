@@ -20,6 +20,7 @@ class MomentTests: XCTestCase {
         super.tearDown()
     }
 
+/*
     func testTheMomentIsNow() {
         let today = moment()
 
@@ -50,7 +51,8 @@ class MomentTests: XCTestCase {
 
         XCTAssertEqual(today.weekdayName, weekdayName, "The moment contains the current week day")
     }
-    
+    */
+
     func testCanCreateMomentsWithSixComponents() {
         let obj = moment([2015, 01, 19, 20, 45, 34])!
         XCTAssertEqual(obj.year, 2015, "The year should match")
@@ -214,7 +216,7 @@ class MomentTests: XCTestCase {
         let epoch = moment(0)
         let copy = moment(epoch)
         let format = "EE yyyy/dd--MMMM HH:mm ZZZZ"
-        let birthday = moment("Tue 1973/4--September 12:30 GMT-03:00", format)!
+        let birthday = moment("Tue 1973/4--September 12:30 GMT-03:00", dateFormat: format)!
         let ninetyFive = moment("1995-12-25")!
         let max = maximum(today, ninetyFive, birthday)!
         XCTAssertEqual(max, today, "Today is the maximum")
@@ -225,7 +227,7 @@ class MomentTests: XCTestCase {
         let epoch = moment(0)
         let copy = moment(epoch)
         let format = "EE yyyy/dd--MMMM HH:mm ZZZZ"
-        let birthday = moment("Tue 1973/4--September 12:30 GMT-03:00", format)!
+        let birthday = moment("Tue 1973/4--September 12:30 GMT-03:00", dateFormat: format)!
         let ninetyFive = moment("1995-12-25")!
         let min = minimum(today, epoch, ninetyFive, birthday)!
         XCTAssertEqual(min, epoch, "The minimum is the epoch")
@@ -259,7 +261,7 @@ class MomentTests: XCTestCase {
     func testFormatDates() {
         let timeZone = NSTimeZone(abbreviation: "GMT+01:00")!
         let birthday = moment("1973-09-04", timeZone: timeZone)!
-        let str = birthday.format(dateFormat: "EE QQQQ yyyy/dd/MMMM ZZZZ")
+        let str = birthday.format("EE QQQQ yyyy/dd/MMMM ZZZZ")
         XCTAssertEqual(str, "Tue 3rd quarter 1973/04/September GMT+01:00", "Complicated string")
 
         let standard = birthday.format()
@@ -279,13 +281,13 @@ class MomentTests: XCTestCase {
     func testTimeZoneSupport() {
         let zone = NSTimeZone(abbreviation: "PST")!
         let birthday = moment("1973-09-04 12:30:00", timeZone: zone)!
-        let str = birthday.format(dateFormat: "EE QQQQ yyyy/dd/MMMM HH:mm ZZZZ")
+        let str = birthday.format("EE QQQQ yyyy/dd/MMMM HH:mm ZZZZ")
         XCTAssertEqual(str, "Tue 3rd quarter 1973/04/September 12:30 GMT-07:00", "A date in San Francisco")
     }
     
     func testUTCMomentSupport() {
         let greenwich = utc()
-        let str = greenwich.format(dateFormat: "ZZZZ")
+        let str = greenwich.format("ZZZZ")
         XCTAssertEqual(str, "GMT", "The timezone is UTC")
     }
     
